@@ -1,4 +1,4 @@
-ami_name           = "toba0z-webapp-ami"
+ami_name           = "toba0z3030-webapp-ami"
 instance_type      = "t2.micro"
 region             = "us-west-2"
 
