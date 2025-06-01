@@ -1,12 +1,15 @@
 name: Packer Build
 
 on:
-  #push:
-   # branches:
-    #  - master
+  # Enable for pull requests to master
   pull_request:
     branches:
       - master
+
+  # Optional: enable for push to master
+  # push:
+  #   branches:
+  #     - master
 
 jobs:
   packer:
@@ -18,11 +21,9 @@ jobs:
 
       - name: Install Packer
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y unzip
-          curl -fsSL -o packer.zip https://releases.hashicorp.com/packer/1.8.4/packer_1.8.4_linux_amd64.zip
-          unzip packer.zip
-          sudo mv packer /usr/local/bin/
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update && sudo apt install packer -y
           packer --version
 
       - name: Configure AWS credentials
@@ -30,10 +31,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "ap-southeast-2" # Optionally include this if you're using a specific region
+          aws-region: "ap-southeast-2"
 
       - name: Run Packer Build
+        working-directory: ami-Creation
         run: |
-          packer init aws-ubuntu.pkr.hcl
-          packer validate aws-ubuntu.pkr.hcl
-          packer build aws-ubuntu.pkr.hcl
+          packer init .
+          packer validate -var-file="variables.pkrvars.hcl" aws-ubuntu.pkr.hcl
+          packer build -var-file="variables.pkrvars.hcl" aws-ubuntu.pkr.hcl
