@@ -2,14 +2,14 @@ name: Packer Build
 
 on:
   # Enable for pull requests to master
-  pull_request:
-    branches:
-      - master
+  # pull_request:
+  #   branches:
+  #     - master
 
   # Optional: enable for push to master
-  # push:
-  #   branches:
-  ###     - master
+  push:
+    branches:
+      - master
 jobs:
   packer:
     runs-on: ubuntu-latest
