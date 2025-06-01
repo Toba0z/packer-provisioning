@@ -9,7 +9,7 @@ on:
   # Optional: enable for push to master
   # push:
   #   branches:
-  #     - master
+  ###     - master
 jobs:
   packer:
     runs-on: ubuntu-latest
