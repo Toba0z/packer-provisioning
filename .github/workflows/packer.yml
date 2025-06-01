@@ -10,7 +10,6 @@ on:
   # push:
   #   branches:
   #     - master
-
 jobs:
   packer:
     runs-on: ubuntu-latest
