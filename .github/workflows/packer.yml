@@ -36,5 +36,5 @@ jobs:
         working-directory: ami-Creation
         run: |
           packer init .
-          packer validate -var-file="variables.pkrvars.hcl" aws-ubuntu.pkr.hcl
-          packer build -var-file="variables.pkrvars.hcl" aws-ubuntu.pkr.hcl
+          packer validate -var-file="variables.pkrvars.hcl" .
+          packer build -var-file="variables.pkrvars.hcl" .
