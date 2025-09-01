@@ -1,4 +1,4 @@
-## How to run
+## How to run the project
 - packer init .
 - packer fmt -var-file="variables.pkrvars.hcl" .
 - packer validate -var-file="variables.pkrvars.hcl" .
